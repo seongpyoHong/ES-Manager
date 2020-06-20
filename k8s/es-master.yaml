@@ -1,0 +1,72 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: es-master
+  labels:
+    component: elasticsearch
+    role: master
+    master: 'true'
+spec:
+  replicas: 1
+  strategy:
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        component: elasticsearch
+        role: master
+        master: 'true'
+    spec:
+      containers:
+      - name: es-master
+        securityContext:
+          privileged: true
+          capabilities:
+            add:
+              - IPC_LOCK
+        image: kayrus/docker-elasticsearch-kubernetes:5.2.2
+        args:
+        - /run.sh
+        - -Epath.conf=/elasticsearch/config
+        # readinessProbe:
+        #   tcpSocket:
+        #     port: 9300
+        #   timeoutSeconds: 1
+        #   successThreshold: 3
+        # imagePullPolicy: Always
+        env:
+        - name: NAMESPACE
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.namespace
+        - name: CLUSTER_NAME
+          valueFrom:
+            configMapKeyRef:
+              name: es-env
+              key: es-cluster-name
+        - name: NETWORK_HOST
+          value: 0.0.0.0
+        - name: NODE_MASTER
+          value: 'true'
+        - name: NODE_DATA
+          value: 'false'
+        - name: HTTP_ENABLE
+          value: 'true'
+        - name: ES_JAVA_OPTS
+          valueFrom:
+            configMapKeyRef:
+              name: es-env
+              key: es-master-java-opts
+        - name: ES_CLIENT_ENDPOINT
+          valueFrom:
+            configMapKeyRef:
+              name: es-env
+              key: es-client-endpoint
+        ports:
+        - name: transport
+          containerPort: 9300
+          protocol: TCP
+        - name: http
+          containerPort: 9200
+          protocol: TCP
+      terminationGracePeriodSeconds: 10
