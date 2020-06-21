@@ -9,6 +9,7 @@ spec:
   selector:
     component: elasticsearch
     master: 'true'
+  clusterIP: None
   ports:
   - name: transport
     port: 9300

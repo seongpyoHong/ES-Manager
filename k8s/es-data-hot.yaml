@@ -1,4 +1,4 @@
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: es-data-hot
@@ -7,6 +7,10 @@ metadata:
     role: data
 spec:
   replicas: 1
+  selector:
+    matchLabels:
+      component: elasticsearch
+      role: data 
   strategy:
     type: RollingUpdate
   template:
@@ -22,17 +26,16 @@ spec:
           capabilities:
             add:
               - IPC_LOCK
-        image: kayrus/docker-elasticsearch-kubernetes:5.2.2
+        image: asia.gcr.io/sphong-kuber/elasticsearch-base:6.8.2
         args:
         - /run.sh
-        - -Epath.conf=/elasticsearch/config
         - -Enode.attr.box_type=hot
         # readinessProbe:
         #   tcpSocket:
         #     port: 9300
         #   timeoutSeconds: 1
         #   successThreshold: 3
-        # imagePullPolicy: Always
+        imagePullPolicy: Always
         env:
         - name: NAMESPACE
           valueFrom:

@@ -1,4 +1,4 @@
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: es-master
@@ -8,6 +8,11 @@ metadata:
     master: 'true'
 spec:
   replicas: 1
+  selector:
+    matchLabels:
+      component: elasticsearch
+      role: master
+      master: 'true'
   strategy:
     type: RollingUpdate
   template:
@@ -17,6 +22,11 @@ spec:
         role: master
         master: 'true'
     spec:
+      # initContainers:
+      # - name: ulimit
+      #   image: alpine:3.5
+      #   command: ['ulimit', '-n', '65535']
+
       containers:
       - name: es-master
         securityContext:
@@ -24,16 +34,17 @@ spec:
           capabilities:
             add:
               - IPC_LOCK
-        image: kayrus/docker-elasticsearch-kubernetes:5.2.2
-        args:
-        - /run.sh
-        - -Epath.conf=/elasticsearch/config
+
+        image: asia.gcr.io/sphong-kuber/elasticsearch-base:6.8.2
+        # args:
+        # - /run.sh
+        # - -Ees.path.conf=/elasticsearch/config
         # readinessProbe:
         #   tcpSocket:
         #     port: 9300
         #   timeoutSeconds: 1
         #   successThreshold: 3
-        # imagePullPolicy: Always
+        imagePullPolicy: Always
         env:
         - name: NAMESPACE
           valueFrom:
@@ -66,7 +77,5 @@ spec:
         - name: transport
           containerPort: 9300
           protocol: TCP
-        - name: http
-          containerPort: 9200
-          protocol: TCP
+          
       terminationGracePeriodSeconds: 10
