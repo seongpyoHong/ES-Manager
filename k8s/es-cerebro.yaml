@@ -6,7 +6,7 @@ metadata:
     k8s-app: cerebro
     kubernetes.io/name: "Cerebro"
 spec:
-  type: NodePort
+  type: LoadBalancer
   ports:
   - port: 9000
     protocol: TCP
@@ -38,7 +38,7 @@ spec:
     spec:
       containers:
       - name: cerebro
-        image:  asia.gcr.io/sphong-kuber/cerebro:0.9.1
+        image:  asia.gcr.io/sphong-kuber/cerebro:0.9.0
         imagePullPolicy: Always
         readinessProbe:
           httpGet:
