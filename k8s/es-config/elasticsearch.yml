@@ -21,7 +21,15 @@ http:
     enabled: ${HTTP_CORS_ENABLE}
     allow-origin: ${HTTP_CORS_ALLOW_ORIGIN}
 
+cloud:
+  kubernetes:
+    service: ${DISCOVERY_SERVICE}
+    namespace: ${NAMESPACE}
 discovery:
   zen:
-    ping.unicast.hosts: ${DISCOVERY_SERVICE}
+    hosts_provider: kubernetes
     minimum_master_nodes: ${NUMBER_OF_MASTERS}
+path.scripts: /elasticsearch/config/scripts
+xpack.security.enabled: false
+xpack.graph.enabled: false
+xpack.watcher.enabled: false

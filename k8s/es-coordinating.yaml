@@ -1,35 +1,41 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: es-data-hot
+  name: es-coordinating
   labels:
     component: elasticsearch
-    role: data
+    role: coordinating
 spec:
   replicas: 1
   selector:
     matchLabels:
       component: elasticsearch
-      role: data 
+      role: coordinating
   strategy:
     type: RollingUpdate
   template:
     metadata:
       labels:
         component: elasticsearch
-        role: data
+        role: coordinating
     spec:
+      # initContainers:
+      # - name: ulimit
+      #   image: alpine:3.5
+      #   command: ['ulimit', '-n', '65535']
+
       containers:
-      - name: es-data
+      - name: es-coordinating
         securityContext:
           privileged: true
           capabilities:
             add:
               - IPC_LOCK
+
         image: asia.gcr.io/sphong-kuber/elasticsearch-base:6.8.2
-        args:
-        - /run.sh
-        - -Enode.attr.box_type=hot
+        # args:
+        # - /run.sh
+        # - -Ees.path.conf=/elasticsearch/config
         # readinessProbe:
         #   tcpSocket:
         #     port: 9300
@@ -46,10 +52,12 @@ spec:
             configMapKeyRef:
               name: es-env
               key: es-cluster-name
+        - name: NETWORK_HOST
+          value: 0.0.0.0
         - name: NODE_MASTER
           value: 'false'
         - name: NODE_DATA
-          value: 'true'
+          value: 'false'
         - name: NODE_INGEST
           value: 'false'
         - name: HTTP_ENABLE
@@ -58,30 +66,15 @@ spec:
           valueFrom:
             configMapKeyRef:
               name: es-env
-              key: es-data-java-opts
+              key: es-master-java-opts
         - name: ES_CLIENT_ENDPOINT
           valueFrom:
             configMapKeyRef:
               name: es-env
               key: es-client-endpoint
-        - name: ES_PERSISTENT
-          valueFrom:
-            configMapKeyRef:
-              name: es-env
-              key: es-persistent-storage
         ports:
         - name: transport
           containerPort: 9300
           protocol: TCP
-        # Random hostPort to prevent multiple ES data instances on one node
-        - name: dummy
-          containerPort: 28652
-          protocol: TCP
-          hostPort: 28652
-        volumeMounts:
-        - name: storage
-          mountPath: /data
-      terminationGracePeriodSeconds: 30
-      volumes:
-      - name: storage
-        emptyDir: {}
+          
+      terminationGracePeriodSeconds: 10
