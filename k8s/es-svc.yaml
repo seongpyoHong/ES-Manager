@@ -4,7 +4,6 @@ metadata:
   name: elasticsearch-client
   labels:
     component: elasticsearch
-    role: client
 spec:
   selector:
     component: elasticsearch
