@@ -1,5 +1,5 @@
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
   name: es-data-warm
   labels:
@@ -7,12 +7,11 @@ metadata:
     role: data
 spec:
   replicas: 1
+  serviceName: elasticsearch-data
   selector:
     matchLabels:
       component: elasticsearch
       role: data
-  strategy:
-    type: RollingUpdate
   template:
     metadata:
       labels:
@@ -79,9 +78,17 @@ spec:
           protocol: TCP
           hostPort: 28651
         volumeMounts:
-        - name: storage
+        - name: data
           mountPath: /data
       terminationGracePeriodSeconds: 30
-      volumes:
-      - name: storage
-        emptyDir: {}
+
+  volumeClaimTemplates:
+    - metadata:
+        name: data
+      spec:
+        accessModes:
+          - ReadWriteOnce
+        storageClassName: hdd
+        resources:
+          requests:
+            storage: 1Gi

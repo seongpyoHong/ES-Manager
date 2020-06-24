@@ -5,14 +5,14 @@ metadata:
   labels:
     component: elasticsearch
     role: master
-    master: 'true'
+
 spec:
-  replicas: 1
+  replicas: 3
   selector:
     matchLabels:
       component: elasticsearch
       role: master
-      master: 'true'
+
   strategy:
     type: RollingUpdate
   template:
@@ -20,13 +20,8 @@ spec:
       labels:
         component: elasticsearch
         role: master
-        master: 'true'
-    spec:
-      # initContainers:
-      # - name: ulimit
-      #   image: alpine:3.5
-      #   command: ['ulimit', '-n', '65535']
 
+    spec:
       containers:
       - name: es-master
         securityContext:
@@ -36,14 +31,11 @@ spec:
               - IPC_LOCK
 
         image: asia.gcr.io/sphong-kuber/elasticsearch-base:6.8.2
-        # args:
-        # - /run.sh
-        # - -Ees.path.conf=/elasticsearch/config
-        # readinessProbe:
-        #   tcpSocket:
-        #     port: 9300
-        #   timeoutSeconds: 1
-        #   successThreshold: 3
+        readinessProbe:
+          tcpSocket:
+            port: 9300
+          timeoutSeconds: 1
+          successThreshold: 3
         imagePullPolicy: Always
         env:
         - name: NAMESPACE
@@ -79,5 +71,9 @@ spec:
         - name: transport
           containerPort: 9300
           protocol: TCP
-          
-      terminationGracePeriodSeconds: 10
+        volumeMounts:
+        - name: shared-storage
+          mountPath: /data
+      volumes:
+      - name: shared-storage
+        emptyDir: {}
