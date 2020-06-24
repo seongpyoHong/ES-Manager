@@ -41,3 +41,9 @@
 
 - Grafana를 통한 Metric 제공
 - Backup Storage 제공
+
+### TODO
+- [ ] Helm Chart 생성 
+- [ ] LoadBalancer -> Ingress
+- [ ] Terraform 적용
+- [ ] Web Interface 생성
