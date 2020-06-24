@@ -1,5 +1,5 @@
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
   name: es-data-hot
   labels:
@@ -7,12 +7,11 @@ metadata:
     role: data
 spec:
   replicas: 1
+  serviceName: elasticsearch-data
   selector:
     matchLabels:
       component: elasticsearch
       role: data 
-  strategy:
-    type: RollingUpdate
   template:
     metadata:
       labels:
@@ -30,11 +29,11 @@ spec:
         args:
         - /run.sh
         - -Enode.attr.box_type=hot
-        # readinessProbe:
-        #   tcpSocket:
-        #     port: 9300
-        #   timeoutSeconds: 1
-        #   successThreshold: 3
+        readinessProbe:
+          tcpSocket:
+            port: 9300
+          timeoutSeconds: 1
+          successThreshold: 3
         imagePullPolicy: Always
         env:
         - name: NAMESPACE
@@ -79,9 +78,16 @@ spec:
           protocol: TCP
           hostPort: 28652
         volumeMounts:
-        - name: storage
+        - name: data
           mountPath: /data
-      terminationGracePeriodSeconds: 30
-      volumes:
-      - name: storage
-        emptyDir: {}
+      terminationGracePeriodSeconds: 10
+  volumeClaimTemplates:
+    - metadata:
+        name: data
+      spec:
+        accessModes:
+          - ReadWriteOnce
+        storageClassName: hdd
+        resources:
+          requests:
+            storage: 1Gi
