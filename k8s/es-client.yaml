@@ -1,31 +1,26 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: es-coordinating
+  name: es-client
   labels:
     component: elasticsearch
-    role: coordinating
+    role: client
 spec:
   replicas: 1
   selector:
     matchLabels:
       component: elasticsearch
-      role: coordinating
+      role: client
   strategy:
     type: RollingUpdate
   template:
     metadata:
       labels:
         component: elasticsearch
-        role: coordinating
+        role: client
     spec:
-      # initContainers:
-      # - name: ulimit
-      #   image: alpine:3.5
-      #   command: ['ulimit', '-n', '65535']
-
       containers:
-      - name: es-coordinating
+      - name: es-client
         securityContext:
           privileged: true
           capabilities:
@@ -36,11 +31,11 @@ spec:
         # args:
         # - /run.sh
         # - -Ees.path.conf=/elasticsearch/config
-        # readinessProbe:
-        #   tcpSocket:
-        #     port: 9300
-        #   timeoutSeconds: 1
-        #   successThreshold: 3
+        readinessProbe:
+          tcpSocket:
+            port: 9300
+          timeoutSeconds: 1
+          successThreshold: 3
         imagePullPolicy: Always
         env:
         - name: NAMESPACE
@@ -61,7 +56,7 @@ spec:
         - name: NODE_INGEST
           value: 'false'
         - name: HTTP_ENABLE
-          value: 'false'
+          value: 'true'
         - name: ES_JAVA_OPTS
           valueFrom:
             configMapKeyRef:
@@ -76,5 +71,7 @@ spec:
         - name: transport
           containerPort: 9300
           protocol: TCP
-          
+        - name: http
+          containerPort: 9200
+          protocol: TCP
       terminationGracePeriodSeconds: 10

@@ -7,7 +7,7 @@ metadata:
 spec:
   selector:
     component: elasticsearch
-    role: master
+    role: client
   type: LoadBalancer
   ports:
   - name: http
