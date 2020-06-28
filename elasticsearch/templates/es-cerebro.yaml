@@ -1,0 +1,68 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: cerebro
+  labels:
+    k8s-app: cerebro
+    kubernetes.io/name: "Cerebro"
+spec:
+  type: LoadBalancer
+  ports:
+  - port: {{ .Values.cerebro.port }}
+    protocol: TCP
+    targetPort: {{ .Values.cerebro.port }}
+  selector:
+    k8s-app: cerebro
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cerebro
+  labels:
+    k8s-app: cerebro
+spec:
+  replicas: {{ .Values.cerebro.replicaCount }}
+  selector:
+    matchLabels:
+      k8s-app: cerebro
+        
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  template:
+    metadata:
+      labels:
+        k8s-app: cerebro
+    spec:
+      containers:
+      - name: cerebro
+        image:  "{{ .Values.cerebro.image.repository }}:{{ .Values.cerebro.image.tag }}"
+        imagePullPolicy: "{{ .Values.cerebro.image.pullPolicy}}"
+        livenessProbe:
+          httpGet:
+            path: /
+            port: {{ .Values.cerebro.port }}
+          timeoutSeconds: 30
+          successThreshold: 3
+        readinessProbe:
+          httpGet:
+            path: /
+            port: {{ .Values.cerebro.port }}
+          timeoutSeconds: 30
+          successThreshold: 3
+        env:
+          - name: ELASTICSEARCH_URL
+            valueFrom:
+              configMapKeyRef:
+                name: es-env
+                key: es-client-endpoint
+          - name: CEREBRO_USERNAME
+            value: {{ .Values.cerebro.auth.username }}
+          - name: CEREBRO_PASSWORD
+            value: {{ .Values.cerebro.auth.password }}
+        ports:
+        - containerPort: {{ .Values.cerebro.port}}
+          name: ui
+          protocol: TCP
