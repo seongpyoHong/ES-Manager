@@ -1,4 +1,4 @@
-## ES Farm (가제)
+## ES Manager
 
 다양한 Cloud Platform(AWS, GCP 등)에 Elasticsearch Cluster를 배포 및 Elasticsearch 관리를 위한 Open Source 제공
 
@@ -8,7 +8,7 @@
 
 - Terraform - Cloud Resource Procvisioning
 
-- kubespray - Deploy Elasticsearch Cluster in Kubernetes
+- Helm - Deploy Elasticsearch Cluster in Kubernetes
 
 - Spring Boot - Backend
 
@@ -26,7 +26,6 @@
   - 노드 Spec 
   - Hot-Warm Node 수
   - Elasticsearch Configuration 수정 가능
-  - Plugin 추가 가능
   - ES Version 선택
   - ES 유저 Secret 세팅
 
@@ -38,7 +37,6 @@
 
 
 ### 미정
-
 - Grafana를 통한 Metric 제공
 - Backup Storage 제공
 
