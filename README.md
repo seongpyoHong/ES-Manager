@@ -41,6 +41,11 @@
 - Backup Storage 제공
 
 ### TODO
+- [ ] Namespace 구분 / Service Account 생성
+    - namespace안에서 사용자에 따른 kube 리소스 관리 가능
+    - 외부로 노출되는 cerebro와 같은 interface에서 유저 인증을 수행하지 못함
+    - 다른 사용자를 Client 권한으로 추가하기 위해서는? 
+      Viewer로 먼저 추가, client role binding
 - [ ] Helm Chart 생성 
 - [ ] LoadBalancer -> Ingress
 - [ ] Terraform 적용

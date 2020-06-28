@@ -76,8 +76,6 @@ spec:
           protocol: TCP
 
         volumeMounts:
-        - name: data
-          mountPath: /data
         - name: es-config
           mountPath: /elasticsearch/conf
 
