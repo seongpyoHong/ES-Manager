@@ -6,7 +6,7 @@ metadata:
     component: elasticsearch
     role: client
 spec:
-  replicas: 1
+  replicas: {{ .Values.elasticsearch.client.replcaCount }}
   selector:
     matchLabels:
       component: elasticsearch
