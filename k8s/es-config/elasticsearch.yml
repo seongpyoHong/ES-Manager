@@ -1,9 +1,11 @@
+##############################   Mandantary Field  #############################
 cluster:
   name: ${CLUSTER_NAME}
 
 node:
   master: ${NODE_MASTER}
   data: ${NODE_DATA}
+  ingest: ${NODE_INGEST}
   name: ${HOSTNAME}
 
 network.host: ${NETWORK_HOST}
@@ -21,15 +23,9 @@ http:
     enabled: ${HTTP_CORS_ENABLE}
     allow-origin: ${HTTP_CORS_ALLOW_ORIGIN}
 
-cloud:
-  kubernetes:
-    service: ${DISCOVERY_SERVICE}
-    namespace: ${NAMESPACE}
 discovery:
   zen:
-    hosts_provider: kubernetes
+    ping.unicast.hosts: ${DISCOVERY_SERVICE}
     minimum_master_nodes: ${NUMBER_OF_MASTERS}
-path.scripts: /elasticsearch/config/scripts
-xpack.security.enabled: false
-xpack.graph.enabled: false
-xpack.watcher.enabled: false
+
+##############################   Add Here!  #############################

@@ -80,7 +80,15 @@ spec:
         volumeMounts:
         - name: data
           mountPath: /data
+        - name: es-config
+          mountPath: /elasticsearch/conf
+
       terminationGracePeriodSeconds: 30
+
+      volumes:
+      - name: es-config
+        configMap:
+          name: es-config
 
   volumeClaimTemplates:
     - metadata:

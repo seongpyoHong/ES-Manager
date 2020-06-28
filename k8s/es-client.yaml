@@ -74,4 +74,16 @@ spec:
         - name: http
           containerPort: 9200
           protocol: TCP
+
+        volumeMounts:
+        - name: data
+          mountPath: /data
+        - name: es-config
+          mountPath: /elasticsearch/conf
+
       terminationGracePeriodSeconds: 10
+
+      volumes:
+      - name: es-config
+        configMap:
+          name: es-config

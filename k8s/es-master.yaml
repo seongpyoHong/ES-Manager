@@ -74,6 +74,14 @@ spec:
         volumeMounts:
         - name: shared-storage
           mountPath: /data
+        - name: es-config
+          mountPath: /elasticsearch/conf
+
+      terminationGracePeriodSeconds: 10
+
       volumes:
       - name: shared-storage
         emptyDir: {}
+      - name: es-config
+        configMap:
+          name: es-config
