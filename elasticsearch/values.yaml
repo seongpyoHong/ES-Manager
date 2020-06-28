@@ -15,12 +15,24 @@ cerebro:
   replicaCount: 1
 
 
-elasticsearch:
+elasticsearch: 
   strategy: RollingUpdate
   image:
     repository: asia.gcr.io/sphong-kuber/elasticsearch-base
     tag: 6.8.2
     pullPolicy: IfNotPresent
+
+  client:
+    replicaCount: 1
+  master: 
+    replicaCount: 3
+  hot:
+    replicaCount: 1
+    storage: 1Gi
+  warm:
+    replicaCount: 1
+    storage: 1Gi
+
 
 imagePullSecrets: []
 nameOverride: ""
