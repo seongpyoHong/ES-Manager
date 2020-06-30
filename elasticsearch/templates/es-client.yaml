@@ -1,0 +1,91 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "elasticsearch.name" . }}-client
+  labels:
+    component: elasticsearch
+    role: client
+spec:
+  replicas: {{ .Values.elasticsearch.client.replcaCount }}
+  selector:
+    matchLabels:
+      component: elasticsearch
+      role: client
+  strategy:
+    type: {{ .Values.elasticsearch.strategy }}
+  template:
+    metadata:
+      labels:
+        component: elasticsearch
+        role: client
+    spec:
+      containers:
+      - name: {{ include "elasticsearch.name" . }}-client
+        securityContext:
+          privileged: true
+          capabilities:
+            add:
+              - IPC_LOCK
+
+        image: "{{ .Values.elasticsearch.image.repository }}:{{ .Values.elasticsearch.image.tag}}"
+        
+        livenessProbe:
+          tcpSocket:
+            port: 9300
+          timeoutSeconds: 120
+          successThreshold: 1
+
+        readinessProbe:
+          tcpSocket:
+            port: 9300
+          timeoutSeconds: 60
+          successThreshold: 1
+        imagePullPolicy: {{ .Values.elasticsearch.image.pullPolicy }}
+        env:
+        - name: NAMESPACE
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.namespace
+        - name: CLUSTER_NAME
+          valueFrom:
+            configMapKeyRef:
+              name: es-env
+              key: es-cluster-name
+        - name: NETWORK_HOST
+          value: 0.0.0.0
+        - name: NODE_MASTER
+          value: 'false'
+        - name: NODE_DATA
+          value: 'false'
+        - name: NODE_INGEST
+          value: 'false'
+        - name: HTTP_ENABLE
+          value: 'true'
+        - name: ES_JAVA_OPTS
+          valueFrom:
+            configMapKeyRef:
+              name: es-env
+              key: es-client-java-opts
+        - name: ES_CLIENT_ENDPOINT
+          valueFrom:
+            configMapKeyRef:
+              name: es-env
+              key: es-client-endpoint
+        ports:
+        - name: transport
+          containerPort: 9300
+          protocol: TCP
+        - name: http
+          containerPort: 9200
+          protocol: TCP
+
+        volumeMounts:
+        - name: es-config
+          mountPath: /elasticsearch/conf
+
+      terminationGracePeriodSeconds: 10
+
+      volumes:
+      - name: es-config
+        configMap:
+          name: es-config

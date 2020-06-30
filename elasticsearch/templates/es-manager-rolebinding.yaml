@@ -1,0 +1,12 @@
+kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: {{ include "elasticsearch.name" . }}-manager-binding
+subjects:
+  # Google Cloud user account
+  - kind: User
+    name: {{ .Values.cluster.manager.email }}
+roleRef:
+  kind: Role
+  name: {{ include "elasticsearch.name" . }}-manager
+  apiGroup: rbac.authorization.k8s.io

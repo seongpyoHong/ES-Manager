@@ -26,11 +26,11 @@ auth = {
       #user-domain = "domain.com"
     #}
   # Example of simple username/password authentication
-  #type: basic
-    #settings: {
-      #username = "admin"
-      #password = "1234"
-    #}
+  type: basic
+    settings: {
+      username = "${CEREBRO_USERNAME}"
+      password = "${CEREBRO_PASSWORD}"
+    }
 }
 
 # A list of known hosts

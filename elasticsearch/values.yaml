@@ -1,0 +1,74 @@
+# Default values for elasticsearch.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+cerebro:
+  image: 
+    repository: asia.gcr.io/sphong-kuber/cerebro
+    tag: 0.9.0
+    pullPolicy: IfNotPresent
+
+  auth:
+    username: admin
+    password: 1234
+  port: 9000
+  replicaCount: 1
+
+
+elasticsearch: 
+  strategy: RollingUpdate
+  image:
+    repository: asia.gcr.io/sphong-kuber/elasticsearch-base
+    tag: 6.8.2
+    pullPolicy: IfNotPresent
+
+  client:
+    replicaCount: 1
+    heapSize: "512m"
+    addtionalJavaOpts: ""
+  master: 
+    replicaCount: 3
+    heapSize: "512m"
+    addtionalJavaOpts: ""
+  hot:
+    replicaCount: 1
+    storage: 1Gi
+    heapSize: "512m"
+    addtionalJavaOpts: ""
+  warm:
+    replicaCount: 1
+    storage: 1Gi
+    heapSize: "512m"
+    addtionalJavaOpts: ""
+
+  clusterName: es-cluster
+  persistent: 
+    storage: 
+      enable: "true"
+
+nameOverride: ""
+fullnameOverride: ""
+
+kibana:
+  image:
+    repository: asia.gcr.io/sphong-kuber/kibana
+    tag: 6.8.2
+    pullPolicy: IfNotPresent
+cluster:
+  user:
+    email: "sphong0417@gmail.com"
+  manager:
+    email: "sphong0417@gmail.com"
+
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 100
+  targetCPUUtilizationPercentage: 80
+  # targetMemoryUtilizationPercentage: 80
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
