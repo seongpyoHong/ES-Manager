@@ -36,9 +36,9 @@ spec:
     spec:
       containers:
       - name: kibana
-        image: asia.gcr.io/sphong-kuber/kibana:6.8.2
+        image: "{{ .Values.kibana.image.repository}}:{{ .Values.kibana.image.tag}}"
         #image: docker.elastic.co/kibana/kibana:5.2.2
-        imagePullPolicy: Always
+        imagePullPolicy: {{ .Values.kibana.image.pullPolicy}}
         readinessProbe:
           httpGet:
             path: /
