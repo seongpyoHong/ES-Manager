@@ -63,7 +63,7 @@ spec:
           valueFrom:
             configMapKeyRef:
               name: es-env
-              key: es-data-java-opts
+              key: es-warm-java-opts
         - name: ES_CLIENT_ENDPOINT
           valueFrom:
             configMapKeyRef:

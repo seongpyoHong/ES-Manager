@@ -24,14 +24,23 @@ elasticsearch:
 
   client:
     replicaCount: 1
+    heapsize: 512m
   master: 
     replicaCount: 3
+    heapsize: 512m
   hot:
     replicaCount: 1
     storage: 1Gi
+    heapsize: 512m
   warm:
     replicaCount: 1
     storage: 1Gi
+    heapsize: 512m
+    
+  clusterName: es-cluster
+  persistent: 
+    storage: 
+      enable: true
 
 nameOverride: ""
 fullnameOverride: ""
