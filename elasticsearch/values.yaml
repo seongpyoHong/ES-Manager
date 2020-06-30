@@ -24,27 +24,27 @@ elasticsearch:
 
   client:
     replicaCount: 1
-    heapsize: 512m
+    heapSize: "512m"
     addtionalJavaOpts: ""
   master: 
     replicaCount: 3
-    heapsize: 512m
+    heapSize: "512m"
     addtionalJavaOpts: ""
   hot:
     replicaCount: 1
     storage: 1Gi
-    heapsize: 512m
+    heapSize: "512m"
     addtionalJavaOpts: ""
   warm:
     replicaCount: 1
     storage: 1Gi
-    heapsize: 512m
+    heapSize: "512m"
     addtionalJavaOpts: ""
 
   clusterName: es-cluster
   persistent: 
     storage: 
-      enable: true
+      enable: "true"
 
 nameOverride: ""
 fullnameOverride: ""
@@ -56,10 +56,10 @@ kibana:
     pullPolicy: IfNotPresent
 cluster:
   user:
-    email: ""
+    email: "sphong0417@gmail.com"
   manager:
-    email: ""
-    
+    email: "sphong0417@gmail.com"
+
 autoscaling:
   enabled: false
   minReplicas: 1

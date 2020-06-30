@@ -29,16 +29,11 @@ spec:
         args:
         - /run.sh
         - -Enode.attr.box_type=warm
-        livenessProbe:
-          tcpSocket:
-            port: 9300
-          timeoutSeconds: 1
-          successThreshold: 3
         readinessProbe:
           tcpSocket:
             port: 9300
-          timeoutSeconds: 1
-          successThreshold: 3
+          timeoutSeconds: 60
+          successThreshold: 1
 
         imagePullPolicy: Always
         env:

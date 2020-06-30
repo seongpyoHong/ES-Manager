@@ -4,10 +4,10 @@ metadata:
 kind: ConfigMap
 data:
   es-cluster-name: {{ .Values.elasticsearch.clusterName }}
-  es-client-java-opts: {{ printf "-Xms%s -Xmx%s" .Values.elasticsearch.client.heapSize .Values.elasticsearch.client.heapSize }} {{ .Values.elasticsearch.client.addtionalJavaOpts}}
-  es-master-java-opts: {{ printf "-Xms%s -Xmx%s" .Values.elasticsearch.master.heapSize .Values.elasticsearch.master.heapSize }} {{ .Values.elasticsearch.master.addtionalJavaOpts}}
-  es-hot-java-opts: {{ printf "-Xms%s -Xmx%s" .Values.elasticsearch.hot.heapSize .Values.elasticsearch.hot.heapSize }} {{ .Values.elasticsearch.hot.addtionalJavaOpts}}
-  es-warm-java-opts: {{ printf "-Xms%s -Xmx%s" .Values.elasticsearch.warm.heapSize .Values.elasticsearch.warm.heapSize }} {{ .Values.elasticsearch.warm.addtionalJavaOpts}}
+  es-client-java-opts: "{{ printf "-Xms%s -Xmx%s" .Values.elasticsearch.client.heapSize .Values.elasticsearch.client.heapSize }} {{ .Values.elasticsearch.client.addtionalJavaOpts}}"
+  es-master-java-opts: "{{ printf "-Xms%s -Xmx%s" .Values.elasticsearch.master.heapSize .Values.elasticsearch.master.heapSize }} {{ .Values.elasticsearch.master.addtionalJavaOpts}}"
+  es-hot-java-opts: "{{ printf "-Xms%s -Xmx%s" .Values.elasticsearch.hot.heapSize .Values.elasticsearch.hot.heapSize }} {{ .Values.elasticsearch.hot.addtionalJavaOpts}}"
+  es-warm-java-opts: "{{ printf "-Xms%s -Xmx%s" .Values.elasticsearch.warm.heapSize .Values.elasticsearch.warm.heapSize }} {{ .Values.elasticsearch.warm.addtionalJavaOpts}}"
   es-client-endpoint: "http://{{ include "elasticsearch.name" . }}-client:9200"
   # es-persistent-storage=true won't allow node on shutdown to relocate shards accross the cluster
-  es-persistent-storage: {{ .Values.elasticsearch.persistent.storage.enable }}
+  es-persistent-storage: {{quote .Values.elasticsearch.persistent.storage.enable }}

@@ -30,17 +30,11 @@ spec:
         - /run.sh
         - -Enode.attr.box_type=hot 
 
-        livenessProbe:
-          tcpSocket:
-            port: 9300
-          timeoutSeconds: 10
-          successThreshold: 3
-
         readinessProbe:
           tcpSocket:
             port: 9300
-          timeoutSeconds: 10
-          successThreshold: 3
+          timeoutSeconds: 60
+          successThreshold: 1
         imagePullPolicy: {{ .Values.elasticsearch.image.pullPolicy }}
         env:
         - name: NAMESPACE

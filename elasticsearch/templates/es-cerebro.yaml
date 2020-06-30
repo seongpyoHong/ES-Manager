@@ -40,18 +40,12 @@ spec:
       - name: cerebro
         image:  "{{ .Values.cerebro.image.repository }}:{{ .Values.cerebro.image.tag }}"
         imagePullPolicy: "{{ .Values.cerebro.image.pullPolicy}}"
-        livenessProbe:
-          httpGet:
-            path: /
-            port: {{ .Values.cerebro.port }}
-          timeoutSeconds: 30
-          successThreshold: 3
         readinessProbe:
           httpGet:
             path: /
             port: {{ .Values.cerebro.port }}
           timeoutSeconds: 30
-          successThreshold: 3
+          successThreshold: 1
         env:
           - name: ELASTICSEARCH_URL
             valueFrom:
@@ -59,9 +53,9 @@ spec:
                 name: es-env
                 key: es-client-endpoint
           - name: CEREBRO_USERNAME
-            value: {{ .Values.cerebro.auth.username }}
+            value: {{quote .Values.cerebro.auth.username }}
           - name: CEREBRO_PASSWORD
-            value: {{ .Values.cerebro.auth.password }}
+            value: {{quote .Values.cerebro.auth.password }}
         ports:
         - containerPort: {{ .Values.cerebro.port}}
           name: ui

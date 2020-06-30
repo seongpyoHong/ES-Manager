@@ -32,17 +32,11 @@ spec:
 
         image: "{{ .Values.elasticsearch.image.repository }}:{{ .Values.elasticsearch.image.tag}}"
 
-        livenessProbe:
-          tcpSocket:
-            port: 9300
-          timeoutSeconds: 10
-          successThreshold: 3
-
         readinessProbe:
           tcpSocket:
             port: 9300
-          timeoutSeconds: 10
-          successThreshold: 3
+          timeoutSeconds: 60
+          successThreshold: 1
         imagePullPolicy: {{ .Values.elasticsearch.image.pullPolicy }}
         env:
         - name: NAMESPACE

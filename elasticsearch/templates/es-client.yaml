@@ -32,14 +32,14 @@ spec:
         livenessProbe:
           tcpSocket:
             port: 9300
-          timeoutSeconds: 10
-          successThreshold: 3
+          timeoutSeconds: 120
+          successThreshold: 1
 
         readinessProbe:
           tcpSocket:
             port: 9300
-          timeoutSeconds: 10
-          successThreshold: 3
+          timeoutSeconds: 60
+          successThreshold: 1
         imagePullPolicy: {{ .Values.elasticsearch.image.pullPolicy }}
         env:
         - name: NAMESPACE
