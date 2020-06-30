@@ -25,18 +25,22 @@ elasticsearch:
   client:
     replicaCount: 1
     heapsize: 512m
+    addtionalJavaOpts: ""
   master: 
     replicaCount: 3
     heapsize: 512m
+    addtionalJavaOpts: ""
   hot:
     replicaCount: 1
     storage: 1Gi
     heapsize: 512m
+    addtionalJavaOpts: ""
   warm:
     replicaCount: 1
     storage: 1Gi
     heapsize: 512m
-    
+    addtionalJavaOpts: ""
+
   clusterName: es-cluster
   persistent: 
     storage: 
