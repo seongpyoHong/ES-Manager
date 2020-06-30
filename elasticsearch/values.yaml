@@ -7,10 +7,8 @@ cerebro:
     repository: asia.gcr.io/sphong-kuber/cerebro
     tag: 0.9.0
     pullPolicy: IfNotPresent
-
-  auth:
-    username: admin
-    password: 1234
+  username: admin
+  password: 1234
   port: 9000
   replicaCount: 1
 
@@ -42,33 +40,27 @@ elasticsearch:
     addtionalJavaOpts: ""
 
   clusterName: es-cluster
-  persistent: 
-    storage: 
-      enable: "true"
-
-nameOverride: ""
-fullnameOverride: ""
+  persistent-enable: "true"
 
 kibana:
   image:
     repository: asia.gcr.io/sphong-kuber/kibana
     tag: 6.8.2
     pullPolicy: IfNotPresent
+
 cluster:
-  user:
-    email: "sphong0417@gmail.com"
-  manager:
-    email: "sphong0417@gmail.com"
+  user-email: "sphong0417@gmail.com"
+  manager-email: "sphong0417@gmail.com"
 
-autoscaling:
-  enabled: false
-  minReplicas: 1
-  maxReplicas: 100
-  targetCPUUtilizationPercentage: 80
-  # targetMemoryUtilizationPercentage: 80
+# autoscaling:
+#   enabled: false
+#   minReplicas: 1
+#   maxReplicas: 100
+#   targetCPUUtilizationPercentage: 80
+#   # targetMemoryUtilizationPercentage: 80
 
-nodeSelector: {}
+# nodeSelector: {}
 
-tolerations: []
+# tolerations: []
 
-affinity: {}
+# affinity: {}

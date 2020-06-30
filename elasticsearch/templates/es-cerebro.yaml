@@ -53,9 +53,9 @@ spec:
                 name: es-env
                 key: es-client-endpoint
           - name: CEREBRO_USERNAME
-            value: {{quote .Values.cerebro.auth.username }}
+            value: {{quote .Values.cerebro.username }}
           - name: CEREBRO_PASSWORD
-            value: {{quote .Values.cerebro.auth.password }}
+            value: {{quote .Values.cerebro.password }}
         ports:
         - containerPort: {{ .Values.cerebro.port}}
           name: ui
