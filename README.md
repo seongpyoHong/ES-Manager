@@ -1,6 +1,5 @@
 ### Elaistcsearch Helm Chart
-- GCP : Elasticsearch Kubernetes Resources in GCP 
-- elasticsearch : Helm Charts for Elasticsearch in GCP
+- elasticsearch : Helm Charts for Elasticsearch
 - image : Elasticsearch / Kibana / Cerebro Docker Image
 
 #### Component
