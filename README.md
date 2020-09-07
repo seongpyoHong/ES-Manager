@@ -1,6 +1,7 @@
 ### Elaistcsearch Helm Chart
 - elasticsearch : Helm Charts for Elasticsearch
 - image : Elasticsearch / Kibana / Cerebro Docker Image
+- terraform : Settings the GKE Cluster for this chart.
 
 #### Component
 - 1 Master Node
