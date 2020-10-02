@@ -1,11 +1,10 @@
 # Default values for elasticsearch.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
-
 cerebro:
   image: 
-    repository: asia.gcr.io/sphong-kuber/cerebro
-    tag: 0.9.0
+    repository: asia.gcr.io/able-groove-288900/cerebro
+    tag: 6.8.2
     pullPolicy: IfNotPresent
   username: admin
   password: 1234
@@ -16,7 +15,7 @@ cerebro:
 elasticsearch: 
   strategy: RollingUpdate
   image:
-    repository: asia.gcr.io/sphong-kuber/elasticsearch-base
+    repository: asia.gcr.io/able-groove-288900/elasticsearch-base
     tag: 6.8.2
     pullPolicy: IfNotPresent
 
@@ -40,18 +39,22 @@ elasticsearch:
     addtionalJavaOpts: ""
 
   clusterName: es-cluster
-  persistent-enable: "true"
+  persistentEnable: "true"
 
 kibana:
   image:
-    repository: asia.gcr.io/sphong-kuber/kibana
+    repository: asia.gcr.io/able-groove-288900/kibana
     tag: 6.8.2
     pullPolicy: IfNotPresent
 
 cluster:
-  user-email: "sphong0417@gmail.com"
-  manager-email: "sphong0417@gmail.com"
+  useremail: "sphong0417@gmail.com"
+  manageremail: "sphong0417@gmail.com"
 
+elasticsearch-exporter:
+  es:
+    uri: http://elasticsearch-discovery:9200
+    all: true
 # autoscaling:
 #   enabled: false
 #   minReplicas: 1
