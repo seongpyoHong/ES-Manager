@@ -5,7 +5,7 @@ metadata:
 subjects:
   # Google Cloud user account
   - kind: User
-    name: {{ .Values.cluster.user-email }}
+    name: {{ .Values.cluster.useremail }}
 roleRef:
   kind: Role
   name: {{ include "elasticsearch.name" . }}-user
