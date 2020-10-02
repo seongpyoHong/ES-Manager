@@ -1,0 +1,3 @@
+elasticsearch/Chart.lock
+terraform/.terraform/
+terraform/terraform.*
