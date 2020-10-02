@@ -12,6 +12,7 @@ resource "google_container_node_pool" "ssd_nodes" {
       disable-legacy-endpoints = "true"
     }
     disk_type = "pd-ssd"
+    disk_size_gb = 30
     oauth_scopes = [
       "https://www.googleapis.com/auth/logging.write",
       "https://www.googleapis.com/auth/monitoring",

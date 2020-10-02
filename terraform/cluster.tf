@@ -16,6 +16,6 @@ resource "google_container_cluster" "primary" {
       issue_client_certificate = false
     }
   }
-  node_version = "1.16.10-gke.8"
-  min_master_version = "1.16.10-gke.8"
+  # node_version = "1.16.10-gke.8"
+  # min_master_version = "1.16.10-gke.8"
 }
