@@ -2,9 +2,9 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   annotations:
-  prometheus.io/scrape: "true"
-  prometheus.io/path: /
-  prometheus.io/port: "8080"
+    prometheus.io/scrape: "true"
+    prometheus.io/path: /metrics
+    prometheus.io/port: "9114"
   name: {{ include "elasticsearch.name" . }}-exporter
 spec:
   replicas: 1
