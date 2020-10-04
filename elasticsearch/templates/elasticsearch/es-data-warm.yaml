@@ -18,6 +18,15 @@ spec:
         component: elasticsearch
         role: data
     spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: cloud.google.com/gke-nodepool
+                operator: In
+                values:
+                - hdd-pool
       containers:
       - name: {{ include "elasticsearch.name" . }}-data-warm
         securityContext:
