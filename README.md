@@ -1,12 +1,23 @@
-### Elaistcsearch Helm Chart
+## Elaistcsearch Helm Chart
 - elasticsearch : Helm Charts for Elasticsearch
 - image : Elasticsearch / Kibana / Cerebro Docker Image
 - terraform : Settings the GKE Cluster for this chart.
 
-#### Component
-- 1 Master Node
-- 2 master eligible node
-- 2 Data Node (Hot/Warm)
-- 1 Client Node (Coordinating Node)
-- 1 Kibana Node
-- 1 Cerebro Node
+---
+### Component
+
+#### Elasticsearch Cluster
+- Master & Master Eligible Node
+- Data Node (Hot/Warm)
+- Client Node (Coordinating Node)
+
+#### Elasticsearch Mangement
+- Cerebro
+- Kibana
+- Curator (CronJob)
+
+#### Cluster Monitoring
+- Prometheus
+- Elasticsearch Exporter
+- Node Exporter
+- Kube State Metrics
