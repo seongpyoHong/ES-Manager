@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: kibana
+  name: elasticsearch-kibana
   labels:
     k8s-app: kibana
 spec:
@@ -19,7 +19,7 @@ spec:
         k8s-app: kibana
     spec:
       containers:
-      - name: kibana
+      - name: elasticsearch-kibana
         image: "{{ .Values.kibana.image.repository}}:{{ .Values.kibana.image.tag}}"
         #image: docker.elastic.co/kibana/kibana:5.2.2
         imagePullPolicy: {{ .Values.kibana.image.pullPolicy}}

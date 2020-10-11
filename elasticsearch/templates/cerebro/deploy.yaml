@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: cerebro
+  name: elasticsearch-cerebro
   labels:
     k8s-app: cerebro
 spec:
@@ -21,7 +21,7 @@ spec:
         k8s-app: cerebro
     spec:
       containers:
-      - name: cerebro
+      - name: elasticsearch-cerebro
         image:  "{{ .Values.cerebro.image.repository }}:{{ .Values.cerebro.image.tag }}"
         imagePullPolicy: "{{ .Values.cerebro.image.pullPolicy}}"
         readinessProbe:

@@ -30,3 +30,22 @@ spec:
               value: Admin
             - name: GF_SERVER_ROOT_URL
               value: /
+          volumeMounts:
+            - name: datasources
+              mountPath: /etc/grafana/provisioning/datasources
+            # Main dashboard provisioning file directory
+            - name: dashboards-main
+              mountPath: /etc/grafana/provisioning/dashboards
+            # Individual dashboards JSON directory
+            - name: dashboards-json
+              mountPath: /etc/dashboards
+      volumes:
+        - name: datasources
+          configMap:
+            name: grafana-datasources
+        - name: dashboards-main
+          configMap:
+            name: grafana-dashboards-main
+        - name: dashboards-json
+          configMap:
+            name: grafana-dashboards-json
