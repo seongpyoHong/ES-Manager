@@ -3,11 +3,12 @@ kind: Service
 metadata:
   name: {{ include "elasticsearch.name" . }}-client
   labels:
-    component: elasticsearch
+{{ include "elasticsearch.labels" . | indent 4}}
+    app: elasticsearch-client
 spec:
   selector:
-    component: elasticsearch
-    role: client
+    app: elasticsearch-client
+{{ include "elasticsearch.selectorLabels" . | indent 4}}
   type: LoadBalancer
   ports:
   - name: http

@@ -3,11 +3,13 @@ kind: Deployment
 metadata:
   name: elasticsearch-kibana
   labels:
-    k8s-app: kibana
+{{ include "elasticsearch.labels" . | indent 4}}
+    app: kibana
 spec:
   selector:
     matchLabels:
-      k8s-app: kibana
+{{ include "elasticsearch.selectorLabels" . | indent 6}}
+      app: kibana
   strategy:
     type: RollingUpdate
     rollingUpdate:
@@ -16,7 +18,8 @@ spec:
   template:
     metadata:
       labels:
-        k8s-app: kibana
+        app: kibana
+{{ include "elasticsearch.labels" . | indent 8}}
     spec:
       containers:
       - name: elasticsearch-kibana

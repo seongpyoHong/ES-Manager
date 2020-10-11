@@ -2,6 +2,8 @@ kind: RoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
   name: {{ include "elasticsearch.name" . }}-user-binding
+  labels:
+{{ include "elasticsearch.labels" . | indent 4}}
 subjects:
   # Google Cloud user account
   - kind: User

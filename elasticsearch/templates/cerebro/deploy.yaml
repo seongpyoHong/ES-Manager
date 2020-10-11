@@ -3,13 +3,14 @@ kind: Deployment
 metadata:
   name: elasticsearch-cerebro
   labels:
-    k8s-app: cerebro
+{{ include "elasticsearch.labels" . | indent 4}}
+    app: cerebro
 spec:
   replicas: {{ .Values.cerebro.replicaCount }}
   selector:
     matchLabels:
-      k8s-app: cerebro
-        
+      app: cerebro
+{{ include "elasticsearch.selectorLabels" . | indent 6}}
   strategy:
     type: RollingUpdate
     rollingUpdate:
@@ -18,7 +19,8 @@ spec:
   template:
     metadata:
       labels:
-        k8s-app: cerebro
+        app: cerebro
+{{ include "elasticsearch.labels" . | indent 8}}
     spec:
       containers:
       - name: elasticsearch-cerebro

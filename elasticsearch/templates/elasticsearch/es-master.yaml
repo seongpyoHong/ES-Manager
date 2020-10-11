@@ -3,24 +3,22 @@ kind: Deployment
 metadata:
   name: {{ include "elasticsearch.name" . }}-master
   labels:
-    component: elasticsearch
-    role: master
-
+    app: elasticsearch-master
+{{ include "elasticsearch.labels" . | indent 4}}
 spec:
   replicas: {{ .Values.elasticsearch.master.replicaCount }}
   selector:
     matchLabels:
-      component: elasticsearch
-      role: master
+{{ include "elasticsearch.selectorLabels" . | indent 6}}
+      app: elasticsearch-master
 
   strategy:
     type: {{ .Values.elasticsearch.strategy }}
   template:
     metadata:
       labels:
-        component: elasticsearch
-        role: master
-
+{{ include "elasticsearch.labels" . | indent 8}}
+        app: elasticsearch-master
     spec:
       containers:
       - name: {{ include "elasticsearch.name" . }}-master

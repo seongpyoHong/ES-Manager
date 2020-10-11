@@ -1,14 +1,16 @@
-{{/*apiVersion: v1*/}}
-{{/*kind: Service*/}}
-{{/*metadata:*/}}
-{{/*  name: cerebro*/}}
-{{/*  labels:*/}}
-{{/*    k8s-app: cerebro*/}}
-{{/*spec:*/}}
-{{/*  type: LoadBalancer*/}}
-{{/*  ports:*/}}
-{{/*  - port: {{ .Values.cerebro.port }}*/}}
-{{/*    protocol: TCP*/}}
-{{/*    targetPort: {{ .Values.cerebro.port }}*/}}
-{{/*  selector:*/}}
-{{/*    k8s-app: cerebro*/}}
+apiVersion: v1
+kind: Service
+metadata:
+    name: cerebro
+    labels:
+{{ include "elasticsearch.labels" . | indent 8}}
+        app: cerebro
+spec:
+    type: LoadBalancer
+    ports:
+        - port: {{ .Values.cerebro.port }}
+          protocol: TCP
+          targetPort: {{ .Values.cerebro.port }}
+    selector:
+{{ include "elasticsearch.selectorLabels" . | indent 8}}
+        app: cerebro

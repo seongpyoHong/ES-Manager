@@ -3,12 +3,12 @@ kind: Service
 metadata:
   name: {{ include "elasticsearch.name" . }}-discovery
   labels:
-    component: elasticsearch
-    role: master    
+{{ include "elasticsearch.labels" . | indent 4}}
+    app: elasticsearch-master
 spec:
   selector:
-    component: elasticsearch
-    role: master
+{{ include "elasticsearch.selectorLabels" . | indent 4}}
+    app: elasticsearch-master
   clusterIP: None
   ports:
   - name: transport

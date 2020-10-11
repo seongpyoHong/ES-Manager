@@ -2,6 +2,9 @@ kind: Role
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
   name: {{ include "elasticsearch.name" . }}-manager
+  labels:
+{{ include "elasticsearch.labels" . | indent 4}}
+
 rules:
 - apiGroups: ["", "apps"] # "" indicates the core API group
   resources: ["pods", "statefulsets", "deployments", "services"]

@@ -3,12 +3,12 @@ kind: Service
 metadata:
   name: {{ include "elasticsearch.name" . }}-data
   labels:
-    component: elasticsearch
-    role: data
+{{ include "elasticsearch.labels" . | indent 4}}
+    app: elasticsearch-data
 spec:
   selector:
-    component: elasticsearch
-    role: data
+{{ include "elasticsearch.selectorLabels" . | indent 4}}
+    app: elasticsearch-data
   clusterIP: None
   ports:
   - name: transport

@@ -2,6 +2,9 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: elasticsearch-exporter
+  labels:
+{{ include "elasticsearch.labels" . | indent 4}}
+    app: elasticsearch-exporter
 spec:
   replicas: 1
   strategy:
@@ -11,11 +14,13 @@ spec:
     type: RollingUpdate
   selector:
     matchLabels:
+{{ include "elasticsearch.selectorLabels" . | indent 6}}
       app: elasticsearch-exporter
   template:
     metadata:
       labels:
         prometheus.io/port: '9114'
+{{ include "elasticsearch.labels" . | indent 8}}
         app: elasticsearch-exporter
     spec:
       containers:

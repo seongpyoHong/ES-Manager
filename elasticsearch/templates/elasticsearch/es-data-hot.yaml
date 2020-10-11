@@ -3,20 +3,22 @@ kind: StatefulSet
 metadata:
   name: {{ include "elasticsearch.name" . }}-data-hot
   labels:
-    component: elasticsearch
-    role: data
+{{ include "elasticsearch.labels" . | indent 4}}
+    app: elasticsearch-data
+    type: hot
 spec:
   replicas: {{ .Values.elasticsearch.hot.replicaCount }}
   serviceName: {{ include "elasticsearch.name" . }}-data
   selector:
     matchLabels:
-      component: elasticsearch
-      role: data 
+{{ include "elasticsearch.labels" . | indent 6}}
+      app: elasticsearch-data
   template:
     metadata:
       labels:
-        component: elasticsearch
-        role: data
+{{ include "elasticsearch.labels" . | indent 8}}
+        app: elasticsearch-data
+        type: hot
     spec:
       affinity:
         nodeAffinity:
